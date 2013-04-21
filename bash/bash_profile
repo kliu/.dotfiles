@@ -1,0 +1,162 @@
+if [ -z "$PS1" ]; then
+   return
+fi
+PS1='\W: \$ '
+
+if [ -f ~/.bashrc ]; then
+   source ~/.bashrc
+fi
+
+export GOROOT=$HOME/Develop/go
+export GOBIN=$GOROOT/bin
+export GRADLE_HOME=$HOME/Develop/java/build/gradle
+export PATH=$PATH:$HOME/.dotfiles/script:$GOBIN:$GRADLE_HOME/bin:/opt/wireshark/bin:/opt/local/bin:/opt/local/sbin:$HOME/.rvm/bin
+export LC_CTYPE=en_US.UTF-8
+export CLICOLOR=1
+export HISTCONTROL=erasedups
+export HISTSIZE=10000
+export JAVA_HOME=`/usr/libexec/java_home`
+export WIRESHARK_APP_DIR=/Applications/Wireshark.app
+export CHECK_STYLE_HOME=$HOME/Develop/java/build/checkstyle-4.3
+export COVERAGE_HOME=$HOME/Develop/java/build/cobertura-1.9
+export JUNIT_HOME=/usr/share/junit
+export ANT_HOME=/usr/share/ant
+
+shopt -s histappend
+shopt -s dotglob
+shopt -s cmdhist
+shopt -s checkwinsize
+
+export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: ${PWD/#$HOME/~}\007"'
+
+if [ -f /etc/bash_completion ]; then
+   . /etc/bash_completion
+fi
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+  . `brew --prefix`/etc/bash_completion
+fi
+
+source $HOME/.dotfiles/script/git-completion.bash
+source $HOME/.dotfiles/script/app_completions
+source $HOME/.dotfiles/script/rake_bash_autocomplete.sh
+
+SUDO_COMPLETE=( $(echo $PATH | sed 'y/:/\n/' | xargs ls -1 2>/dev/null) )
+complete -o default -W "${SUDO_COMPLETE[*]}" sudo
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+
+[[ -s "$HOME/.nvm/nvm.sh" ]] && . "$HOME/.nvm/nvm.sh" # Load NVM function
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias abs="aboo -s" #address book search using aboo
+alias cb='cd -'
+alias cpu='top -o cpu'
+alias d1="export JPDA=123"
+alias d0="export JPDA="
+alias f="open -a Finder ./"
+alias fname="find . -name"
+alias grep="grep --color=auto -i -H -n"
+alias ip="curl icanhazip.com"
+alias jek="jekyll"
+alias ls="ls -GlFh"
+alias lt='echo "------Newest--" && ls -At1 -GlFh && echo "------Oldest--"'
+alias ltr='echo "------Oldest--" && ls -Art1 -GlFh && echo "------Newest--"'
+alias mkdir='mkdir -p -v'
+alias mvn-debug="export MAVEN_OPTS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,suspend=y,server=y'"
+alias mvn-debugoff="export MAVEN_OPTS="
+alias o="open -a"
+alias pc="pwd | pbcopy"
+alias src="source ~/.bash_profile"
+alias sz="du -sh"
+alias tower='open . -a "Tower"'
+alias ungit="find . -name '.git' -exec rm -rf {} \;"
+
+console () {
+  if [[ $# > 0 ]]; then
+    query=$(echo "$*"|tr -s ' ' '|')
+    tail -f /var/log/system.log|grep -i --color=auto -E "$query"
+  else
+    tail -f /var/log/system.log
+  fi
+}
+
+extract () { #unarchive various compression formats based on extension
+        if [ -f $1 ] ; then
+                case $1 in
+                        *.tar.bz2)          tar xjf $1       ;;
+                        *.tar.gz)           tar xzf $1       ;;
+                        *.bz2)              bunzip2 $1       ;;
+                        *.rar)              rar x $1         ;;
+                        *.gz)               gunzip $1        ;;
+                        *.tar)              tar xf $1        ;;
+                        *.tbz2)             tar xjf $1       ;;
+                        *.tgz)              tar xzf $1       ;;
+                        *.zip)              unzip $1         ;;
+                        *.Z)                uncompress $1    ;;
+                        *.dmg)              hdiutil mount $1 ;;
+                        *)                  echo "'$1' cannot be extracted via extract()" ;;
+                esac
+        else
+                echo "'$1' is not a valid file"
+        fi
+}
+
+fk () {
+  IFS=$'\n'
+  PS3='Kill which process? (1 to cancel): '
+  select OPT in "Cancel" $(fp $1); do
+    if [ $OPT != "Cancel" ]; then
+      kill $(echo $OPT|awk '{print $NF}')
+    fi
+    break
+  done
+  unset IFS
+}
+
+manpdf () { #display man page as a PostScript PDF in Preview.app
+  man -t "$1"|open -f -a "Preview.app"
+}
+
+mantxt () { #open man page in TextMate
+  MANWIDTH=160 MANPAGER='col -bx' man $@ | e
+}
+
+# instant web server for current dir
+function serve() {
+  python -m SimpleHTTPServer ${1:-8080}
+}
+
+call () {
+  number=`echo "$1"`
+  if [[ "$number" =~ ^'#' ]]; then
+    number=`echo "${number:1}"`
+    if [[ "$number" =~ ^'+' ]]; then
+      number=`echo "$number"`
+    else
+      number=`echo "+86${number}"`
+    fi
+  fi
+  # number=`echo $1|sed 's/[\(\)\+ \-]//g'|sed 's/^1//'|sed 's/^/+/'`
+  osascript -e "tell application \"Skype\" to send command \"CALL $number\" script name \"CLIDIALER\""
+}
+
+function myip() {
+  ifconfig lo0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'
+  ifconfig en0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en0 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
+  ifconfig en0 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en0 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
+  ifconfig en1 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en1 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
+  ifconfig en1 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
+}
+
+# exports a clean copy of the current git repo to a zip file
+# `zipup ~/Desktop/gitarchive.zip`
+function zipup() {
+  git archive --format zip --output $1 master
+}
+
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/share/python:$PATH
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

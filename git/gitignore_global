@@ -1,0 +1,62 @@
+# OS generated files #
+######################
+.DS_Store*
+.AppleDouble
+.LSOverride
+#Icon?
+
+ehthumbs.db
+Thumbs.db
+._*
+
+*.sock*
+*.crash
+
+.Spotlight-V100
+.Trashes
+
+# IDE generated files #
+# ----------------------------------------------------------------------------
+# Xcode
+# (https://github.com/github/gitignore/blob/master/Objective-C.gitignore)
+# There is no harm in versioning these artifacts, but some purists say not to.
+# Here for future reference only
+# *.pbxuser - stores user's preferences for the project, e.g. window sizes,
+#             active build style, etc.
+# *.perspective - more user specific project settings
+# *.perspectivev3 - v3 of more user specific project settings
+#
+# Updated 1/15/2013 per
+# http://robots.thoughtbot.com/post/33796217972/xcode-and-git-bridging-the-gap
+# ----------------------------------------------------------------------------
+######################
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
+
+# Directory #
+######################
+target/
+build/
+CVS/
+.svn/
+
+# Compiled source #
+###################
+*.class
+*.pyo
+*.pyc
+*.o
+*.LinkFileList
+*.hmap
+
+# Logs #
+######################
+*.log
+
+
