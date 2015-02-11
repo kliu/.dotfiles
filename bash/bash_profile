@@ -163,3 +163,4 @@ export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/share/python:$PATH
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+[[ -s /Users/kt/.rsvm/rsvm.sh ]] && . /Users/kt/.rsvm/rsvm.sh # This loads RSVM
