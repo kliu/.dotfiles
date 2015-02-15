@@ -1,0 +1,63 @@
+[user]
+	name = kliu
+	email = kyle.lzy@gmail.com
+[core]
+	excludesfile =~/.dotfiles/git/gitignore_global
+[gui]
+[color]
+	ui = auto
+[color "branch"]
+	current = cyan
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = blue
+	frag = cyan
+	old = red
+	new = green
+	whitespace = red reverse
+[color "status"]
+	added = green
+	changed = blue
+	untracked = cyan
+
+[alias]
+	hist = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	cmt = commit -am
+
+[diff]
+	tool = Kaleidoscope
+[merge]
+	tool = Kaleidoscope
+
+[difftool]
+	prompt = false
+[difftool "chdiff"]
+	cmd = /usr/bin/env chdiff $LOCAL $REMOTE
+[difftool "diffmerge"]
+	cmd = "/Applications/DiffMerge.app/Contents/MacOS/DiffMerge" $LOCAL $REMOTE
+[difftool "sourcetree"]
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	path = 
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[mergetool]
+	keepBackup = false
+	prompt = false
+[mergetool "diffmerge"]
+	cmd = "/Applications/DiffMerge.app/Contents/MacOS/DiffMerge" --merge\n--result=$MERGED $LOCAL $BASE $REMOTE
+	trustExitCode = true
+[mergetool "chdiff"]
+ 	cmd = /usr/bin/env chdiff --wait "$LOCAL" "$REMOTE"
+ 	keepBackup = false
+ 	trustExitCode = false
+[mergetool "sourcetree"]
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+
+[push]
+	default = simple

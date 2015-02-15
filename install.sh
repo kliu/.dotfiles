@@ -9,7 +9,7 @@ mv ~/.ctags ~/.bak/ctags
 
 ZSHRC=$HOME/.dotfiles/oh-my-zsh/zshrc
 GIT_ATTR=$HOME/.dotfiles/git/gitattributes
-GIT_CFG=$HOME/Dropbox/Data/Git/gitconfig
+GIT_CFG=$HOME/.dotfiles/git/gitconfig
 BASH_HOME=$HOME/.dotfiles/bash
 BASH_PROFILE=$BASH_HOME/bash_profile
 CGTAG=$HOME/.dotfiles/ctags/ctags
