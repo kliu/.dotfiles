@@ -164,3 +164,7 @@ export PATH=/usr/local/share/python:$PATH
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 [[ -s /Users/kt/.rsvm/rsvm.sh ]] && . /Users/kt/.rsvm/rsvm.sh # This loads RSVM
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/kt/.sdkman"
+[[ -s "/Users/kt/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kt/.sdkman/bin/sdkman-init.sh"
