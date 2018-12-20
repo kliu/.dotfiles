@@ -66,3 +66,6 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[hub]
+	host = sqbu-github.cisco.com
+	protocol = ssh
