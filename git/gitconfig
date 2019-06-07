@@ -69,3 +69,6 @@
 [hub]
 	host = sqbu-github.cisco.com
 	protocol = ssh
+
+[url "ssh://git@sqbu-github.cisco.com/"]
+    insteadOf = https://sqbu-github.cisco.com/
