@@ -72,3 +72,5 @@
 
 [url "ssh://git@sqbu-github.cisco.com/"]
     insteadOf = https://sqbu-github.cisco.com/
+[init]
+	defaultBranch = master
